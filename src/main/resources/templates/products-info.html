@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Info about product</title>
+</head>
+<body>
+<div th:replace="header"></div>
+<div class="col-md-offset-2 col-sm-8">
+    <h2>List of Products</h2>
+    <form th:action="@{/products/create}" method="get">
+        <div align="right">
+            <input class="btn-info btn-lg" type="submit" value="Create New Product">
+        </div>
+    </form>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Product name</th>
+            <th scope="col">Product price</th>
+            <th scope="col">Product status</th>
+            <th scope="col">Remove product</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product, iStat: ${products}">
+            <th scope="row" th:text="${iStat.index + 1}"/>
+            <td th:text="${product.name}"/>
+            <td th:text="${product.price}"/>
+            <td th:text="${product.status}"/>
+            <td>
+                <a th:href="@{|/products/${product.id}/delete|}">Remove</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

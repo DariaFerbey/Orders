@@ -1,0 +1,15 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.w3.org/1999/xhtml"
+     sec:authorize="isAuthenticated()">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div>
+                    <a class="navbar-brand" th:href="@{/}">Home Page |</a>
+                    <a class="navbar-brand"th:href="@{/products/all}"> List of Products |</a>
+                    <a class="navbar-brand"th:href="@{/orders/all}"> List of Orders |</a>
+                </div>
+        </div>
+    </nav>
+</div>
+
