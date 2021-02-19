@@ -23,6 +23,7 @@
             <th scope="col">Product Name</th>
             <th scope="col">Products Quantity</th>
             <th scope="col">Order Created Date</th>
+            <th scope="col">Update order</th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +35,9 @@
             <td th:text="${orderItem.product.name}"/>
             <td th:text="${orderItem.quantity}"/>
             <td th:text="${orderItem.order.createdAt}"/>
+            <td>
+                <a th:href="@{|/orders/${orderItem.order.id}/update|}">Update</a>
+            </td>
         </tr>
     </table>
 </div>

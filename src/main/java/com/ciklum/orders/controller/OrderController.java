@@ -1,6 +1,7 @@
 package com.ciklum.orders.controller;
 
 import com.ciklum.orders.model.Order;
+import com.ciklum.orders.model.OrderItem;
 import com.ciklum.orders.model.ProductsStatus;
 import com.ciklum.orders.service.OrderItemService;
 import com.ciklum.orders.service.OrderService;
@@ -9,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -44,6 +42,28 @@ public class OrderController {
         }
 
         orderService.crete(order);
+        return "redirect:/orders/all";
+    }
+
+    @GetMapping("/{orderItem_id}/update")
+    public String update(@PathVariable long orderItem_id, Model model) {
+        OrderItem order = orderItemService.readById(orderItem_id);
+        model.addAttribute("order", order);
+        return "update-order";
+    }
+
+
+    @PostMapping("/{orderItem_id}/update")
+    public String update(@PathVariable("orderItem_id") long orderItem_id, @Validated @ModelAttribute("order") OrderItem order, BindingResult result) {
+        if (result.hasErrors()) {
+            order.setProduct(productService.readById(orderItem_id));
+            order.setOrder(orderService.readById(orderItem_id));
+            return "update-order";
+        }
+        OrderItem oldOrderItem = orderItemService.readById(orderItem_id);
+        order.setProduct(oldOrderItem.getProduct());
+        order.setOrder(oldOrderItem.getOrder());
+        orderItemService.update(order);
         return "redirect:/orders/all";
     }
 
